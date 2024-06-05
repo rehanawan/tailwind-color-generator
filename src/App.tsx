@@ -24,7 +24,19 @@ const App: React.FC = () => {
 
     return (
         <div className="max-w-5xl mx-auto p-4 w-full text-gray-900 antialiased">
-            <h1 className="text-4xl font-bold py-4 text-center">TailwindCSS Color Generator</h1>
+            <div className={"pb-8"}>
+                <h1 className="text-4xl flex items-center justify-center font-bold text-center">
+                    <div className={"flex h-7"}><svg id="logo-38" width="100%" height="100%" viewBox="0 0 78 32" fill="none"
+                               xmlns="http://www.w3.org/2000/svg"> <path d="M55.5 0H77.5L58.5 32H36.5L55.5 0Z"
+                                                                         className="ccustom" fill="#FF7A00"></path> <path
+                        d="M35.5 0H51.5L32.5 32H16.5L35.5 0Z" className="ccompli1" fill="#FF9736"></path> <path
+                        d="M19.5 0H31.5L12.5 32H0.5L19.5 0Z" className="ccompli2" fill="#FFBC7D"></path> </svg>
+                    </div>
+
+                    Shades Generator
+                </h1>
+                <h2 className={"text-md text-center"}>Powered by Tailwind and React</h2>
+            </div>
             <div className={"flex justify-end"}>
                 <Field as={"div"} className={"flex items-center space-x-4"}>
                     <Label as={"span"}>
@@ -189,7 +201,7 @@ const App: React.FC = () => {
                                     {
                                         saturationItems.map((item) => (
                                             <td
-                                                key={item*-1}
+                                                key={item * -1}
                                                 className={"relative"}
                                             >
                                                 <div
@@ -254,7 +266,7 @@ const App: React.FC = () => {
       colors: {
 `}</span>
             {`        ${closest(hslToHex(hue, averageSaturation(
-                saturation,endSaturation), 50)).name}: {
+                saturation, endSaturation), 50)).name}: {
 `}
             {ShadeGenerator(shades, hue, saturation, endSaturation).map(
                 (hslShade) => (
