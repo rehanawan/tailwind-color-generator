@@ -15,6 +15,10 @@ const App: React.FC = () => {
     const [saturation, setSaturation] = useState(19);
     const [endSaturation, setEndSaturation] = useState(32);
     const shades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900];
+    const items = Array.from({length: 360}, (_, index) => index + 1);
+
+    // const [saturation, setSaturation] = useState(100);
+
     return (
         <div className="max-w-5xl mx-auto p-4 w-full text-gray-900 antialiased">
             <h1 className="text-4xl font-bold py-4 text-center">TailwindCSS Color Generator</h1>
@@ -63,8 +67,54 @@ const App: React.FC = () => {
                         )}
                     </ul>
                 </div>
-                <div className="flex-1 space-y-4 flex flex-col justify-between">
+                <div className="flex-1 space-y-4 flex flex-col justify-between mt-8">
                     <div className="space-y-4">
+                    <div className="">
+                        <table className={"border-collapse w-full"}>
+                            <tbody>
+                            <tr>
+                                {
+                                    items.map((item) => (
+                                        <td
+                                            key={item}
+                                            className={"relative"}
+                                        >
+                                            <div
+                                                className={`${item == hue ? 'inline' : 'hidden'} absolute text-center -top-8 -left-4`}
+                                                id={`huepointer${item}`}>
+                                                <div className={"border rounded"}>{item}</div>
+                                                <div className={"flex items-center content-center justify-center"}>
+
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                         viewBox="0 0 24 24"
+                                                         strokeWidth={1.5} stroke="currentColor" className="size-2">
+                                                        <path strokeLinecap="round" strokeLinejoin="round"
+                                                              d="m19.5 8.25-7.5 7.5-7.5-7.5"/>
+                                                    </svg>
+                                                </div>
+
+                                            </div>
+
+                                        </td>
+                                    ))
+                                }
+                            </tr>
+                            <tr>
+                                {
+                                    items.map((item) => (
+                                        <td
+                                            key={item}
+                                            className={'h-8'}
+                                            style={{backgroundColor: `hsl(${item}, 100%, 50%)`, height: "22px"}}
+                                            onClick={() => setHue(item)}
+                                            title={`Hue: ${item}`}
+                                        >
+                                        </td>
+                                    ))
+                                }
+                            </tr>
+                            </tbody>
+                        </table>
                         <NumberInput
                             title="Hue"
                             value={hue}
@@ -72,6 +122,7 @@ const App: React.FC = () => {
                             max={360}
                             min={0}
                         />
+                    </div>
                         <NumberInput
                             title="Saturation"
                             value={saturation}
@@ -103,7 +154,7 @@ const App: React.FC = () => {
     extend: {
       colors: {
 `}</span>
-            {`        blue: {
+            {`        'my-color': {
 `}
             {ShadeGenerator(shades, hue, saturation, endSaturation).map(
                 (hslShade) => (
