@@ -7,6 +7,7 @@ import {ShadeGenerator} from "./utils/ShadeGenerator";
 import ShadesExample from "./components/ShadesExample";
 import {Field, Label, Switch} from "@headlessui/react";
 import {classNames} from "./utils";
+import Footer from "./components/Footer.tsx";
 
 const App: React.FC = () => {
     const [showHex, setShowHex] = useState(false);
@@ -126,6 +127,7 @@ const App: React.FC = () => {
 };`}</span>
         </pre>
             </div>
+            <Footer/>
         </div>
     );
 };
