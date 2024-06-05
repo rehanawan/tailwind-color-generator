@@ -138,8 +138,7 @@ const ShadesExample: React.FC<{ shades: IHslShade[] }> = ({ shades }) => {
                 ),
               }}
             >
-              This is an example that will help you see how your colours would
-              look like on a real page.
+                Here is an example to help you visualize how your colors will appear on an actual web page.
             </p>
           </div>
         </div>
