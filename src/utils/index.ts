@@ -17,3 +17,12 @@ export function hslToHex(h:number, s:number, l:number): string {
 export function IHslShadeToHex(shade:IHslShade): string {
     return hslToHex(shade.hue, shade.saturation, shade.lightness);
 }
+
+export function averageSaturation(saturation: number, endSaturation: number): number {
+    if (saturation === endSaturation)
+        return saturation;
+    else if (saturation > endSaturation)
+        return Math.round((endSaturation + saturation) / 2);
+    else
+    return Math.round((saturation + endSaturation) / 2);
+}

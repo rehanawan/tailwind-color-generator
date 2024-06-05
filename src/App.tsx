@@ -6,8 +6,10 @@ import ShadeCode from "./components/ShadeCode";
 import {ShadeGenerator} from "./utils/ShadeGenerator";
 import ShadesExample from "./components/ShadesExample";
 import {Field, Label, Switch} from "@headlessui/react";
-import {classNames} from "./utils";
+import {averageSaturation, classNames, hslToHex} from "./utils";
 import Footer from "./components/Footer.tsx";
+import {closest} from "color-2-name";
+
 
 const App: React.FC = () => {
     const [showHex, setShowHex] = useState(false);
@@ -15,7 +17,8 @@ const App: React.FC = () => {
     const [saturation, setSaturation] = useState(19);
     const [endSaturation, setEndSaturation] = useState(32);
     const shades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900];
-    const items = Array.from({length: 360}, (_, index) => index + 1);
+    const hueItems = Array.from({length: 360}, (_, index) => index + 1);
+    const saturationItems = Array.from({length: 100}, (_, index) => index + 1);
 
     // const [saturation, setSaturation] = useState(100);
 
@@ -68,75 +71,171 @@ const App: React.FC = () => {
                     </ul>
                 </div>
                 <div className="flex-1 space-y-4 flex flex-col justify-between mt-8">
-                    <div className="space-y-4">
-                    <div className="">
-                        <table className={"border-collapse w-full"}>
-                            <tbody>
-                            <tr>
-                                {
-                                    items.map((item) => (
-                                        <td
-                                            key={item}
-                                            className={"relative"}
-                                        >
-                                            <div
-                                                className={`${item == hue ? 'inline' : 'hidden'} absolute text-center -top-8 -left-4`}
-                                                id={`huepointer${item}`}>
-                                                <div className={"border rounded w-9"}>{item}</div>
-                                                <div className={"flex items-center content-center justify-center"}>
+                    <div className="space-y-10">
+                        <div className="">
+                            <table className={"border-collapse w-full"}>
+                                <tbody>
+                                <tr>
+                                    {
+                                        hueItems.map((item) => (
+                                            <td
+                                                key={item}
+                                                className={"relative"}
+                                            >
+                                                <div
+                                                    className={`${item == hue ? 'inline' : 'hidden'} absolute text-center -top-8 -left-4`}
+                                                    id={`huepointer${item}`}>
+                                                    <div className={"border rounded w-9"}>{item}</div>
+                                                    <div className={"flex items-center content-center justify-center"}>
 
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                         viewBox="0 0 24 24"
-                                                         strokeWidth={1.5} stroke="currentColor" className="size-2">
-                                                        <path strokeLinecap="round" strokeLinejoin="round"
-                                                              d="m19.5 8.25-7.5 7.5-7.5-7.5"/>
-                                                    </svg>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                             viewBox="0 0 24 24"
+                                                             strokeWidth={1.5} stroke="currentColor" className="size-2">
+                                                            <path strokeLinecap="round" strokeLinejoin="round"
+                                                                  d="m19.5 8.25-7.5 7.5-7.5-7.5"/>
+                                                        </svg>
+                                                    </div>
+
                                                 </div>
 
-                                            </div>
+                                            </td>
+                                        ))
+                                    }
+                                </tr>
+                                <tr>
+                                    {
+                                        hueItems.map((item) => (
+                                            <td
+                                                key={item}
+                                                className={'h-8'}
+                                                style={{backgroundColor: `hsl(${item}, 100%, 50%)`, height: "22px"}}
+                                                onClick={() => setHue(item)}
+                                                title={`Hue: ${item}`}
+                                            >
+                                            </td>
+                                        ))
+                                    }
+                                </tr>
+                                </tbody>
+                            </table>
+                            <NumberInput
+                                title="Hue"
+                                value={hue}
+                                setValue={setHue}
+                                max={360}
+                                min={0}
+                            />
+                        </div>
+                        <div>
 
-                                        </td>
-                                    ))
-                                }
-                            </tr>
-                            <tr>
-                                {
-                                    items.map((item) => (
-                                        <td
-                                            key={item}
-                                            className={'h-8'}
-                                            style={{backgroundColor: `hsl(${item}, 100%, 50%)`, height: "22px"}}
-                                            onClick={() => setHue(item)}
-                                            title={`Hue: ${item}`}
-                                        >
-                                        </td>
-                                    ))
-                                }
-                            </tr>
-                            </tbody>
-                        </table>
-                        <NumberInput
-                            title="Hue"
-                            value={hue}
-                            setValue={setHue}
-                            max={360}
-                            min={0}
-                        />
-                    </div>
-                        <NumberInput
-                            title="Saturation"
-                            value={saturation}
-                            setValue={setSaturation}
-                            max={101}
-                            min={0}
-                        />
-                        <NumberInput
-                            title="Saturate Ends"
-                            value={endSaturation}
-                            setValue={setEndSaturation}
-                            max={101}
-                            min={-100}
-                        />
+                            <table className={"border-collapse w-full"}>
+                                <tbody>
+                                <tr>
+                                    {
+                                        saturationItems.map((item) => (
+                                            <td
+                                                key={item}
+                                                className={"relative"}
+                                            >
+                                                <div
+                                                    className={`${item == saturation ? 'inline' : 'hidden'} absolute text-center -top-8 -left-4`}
+                                                    id={`saturationpointer${item}`}>
+                                                    <div className={"border rounded w-9"}>{item}</div>
+                                                    <div className={"flex items-center content-center justify-center"}>
+
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                             viewBox="0 0 24 24"
+                                                             strokeWidth={1.5} stroke="currentColor" className="size-2">
+                                                            <path strokeLinecap="round" strokeLinejoin="round"
+                                                                  d="m19.5 8.25-7.5 7.5-7.5-7.5"/>
+                                                        </svg>
+                                                    </div>
+
+                                                </div>
+
+                                            </td>
+                                        ))
+                                    }
+                                </tr>
+                                <tr>
+                                    {
+                                        saturationItems.map((item) => (
+                                            <td
+                                                key={item}
+                                                className={'h-8'}
+                                                style={{backgroundColor: `hsl(${hue}, ${item}%, 50%)`, height: "22px"}}
+                                                onClick={() => setSaturation(item)}
+                                                title={`Saturation: ${item}`}
+                                            >
+                                            </td>
+                                        ))
+                                    }
+                                </tr>
+                                </tbody>
+                            </table>
+                            <NumberInput
+                                title="Saturation"
+                                value={saturation}
+                                setValue={setSaturation}
+                                max={101}
+                                min={0}
+                            />
+                        </div>
+                        <div>
+
+                            <table className={"border-collapse w-full"}>
+                                <tbody>
+                                <tr>
+                                    {
+                                        saturationItems.map((item) => (
+                                            <td
+                                                key={item*-1}
+                                                className={"relative"}
+                                            >
+                                                <div
+                                                    className={`${item == endSaturation ? 'inline' : 'hidden'} absolute text-center -top-8 -left-4`}
+                                                    id={`saturationpointer${item}`}>
+                                                    <div className={"border rounded w-9"}>{item}</div>
+                                                    <div className={"flex items-center content-center justify-center"}>
+
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                             viewBox="0 0 24 24"
+                                                             strokeWidth={1.5} stroke="currentColor" className="size-2">
+                                                            <path strokeLinecap="round" strokeLinejoin="round"
+                                                                  d="m19.5 8.25-7.5 7.5-7.5-7.5"/>
+                                                        </svg>
+                                                    </div>
+
+                                                </div>
+
+                                            </td>
+                                        ))
+                                    }
+                                </tr>
+                                <tr>
+                                    {
+                                        saturationItems.map((item) => (
+                                            <td
+                                                key={item}
+                                                className={'h-8'}
+                                                style={{backgroundColor: `hsl(${hue}, ${item}%, 50%)`, height: "22px"}}
+                                                onClick={() => setEndSaturation(item)}
+                                                title={`Saturation: ${item}`}
+                                            >
+                                            </td>
+                                        ))
+                                    }
+                                </tr>
+                                </tbody>
+                            </table>
+                            <NumberInput
+                                title="Saturate Ends"
+                                value={endSaturation}
+                                setValue={setEndSaturation}
+                                max={101}
+                                min={0}
+                            />
+                        </div>
                     </div>
                     <div>
                         <ShadesExample
@@ -154,7 +253,8 @@ const App: React.FC = () => {
     extend: {
       colors: {
 `}</span>
-            {`        'my-color': {
+            {`        ${closest(hslToHex(hue, averageSaturation(
+                saturation,endSaturation), 50)).name}: {
 `}
             {ShadeGenerator(shades, hue, saturation, endSaturation).map(
                 (hslShade) => (
