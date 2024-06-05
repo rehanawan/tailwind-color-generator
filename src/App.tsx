@@ -82,7 +82,7 @@ const App: React.FC = () => {
                                             <div
                                                 className={`${item == hue ? 'inline' : 'hidden'} absolute text-center -top-8 -left-4`}
                                                 id={`huepointer${item}`}>
-                                                <div className={"border rounded"}>{item}</div>
+                                                <div className={"border rounded w-9"}>{item}</div>
                                                 <div className={"flex items-center content-center justify-center"}>
 
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none"
