@@ -9,6 +9,9 @@ import {Field, Label, Switch} from "@headlessui/react";
 import {averageSaturation, classNames, hslToHex} from "./utils";
 import Footer from "./components/Footer.tsx";
 import {closest} from "color-2-name";
+import ColorPicker from "./components/ColorPicker.tsx";
+import PalettesComponent from "./components/PalettesComponent.tsx";
+import {Palette} from "./utils/colors";
 
 
 const App: React.FC = () => {
@@ -19,11 +22,12 @@ const App: React.FC = () => {
     const shades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900];
     const hueItems = Array.from({length: 360}, (_, index) => index + 1);
     const saturationItems = Array.from({length: 100}, (_, index) => index + 1);
+    const [palletsList, setPalletsList] = useState<Palette[]>([])
 
     // const [saturation, setSaturation] = useState(100);
 
     return (
-        <div className="max-w-5xl mx-auto p-4 w-full text-gray-900 antialiased">
+        <div className="max-w-7xl mx-auto p-4 w-full text-gray-900 antialiased">
             <div className={"pb-8"}>
                 <h1 className="text-4xl flex items-center justify-center font-bold text-center">
                     <div className={"flex h-7"}><svg id="logo-38" width="100%" height="100%" viewBox="0 0 78 32" fill="none"
@@ -36,6 +40,14 @@ const App: React.FC = () => {
                     Shades Generator
                 </h1>
                 <h2 className={"text-md text-center"}>Powered by Tailwind and React</h2>
+            </div>
+            <div className={"flex flex-col gap-2 justify-center w-full items-center my-2"}>
+                <ColorPicker onGenerate={(e)=>{
+                    console.log(e)
+                    if (e)
+                        setPalletsList([...palletsList, e])
+                }}/>
+                <span className={"text-sm"}>Click on the color picker to add a color to the palette or create color below</span>
             </div>
             <div className={"flex justify-end"}>
                 <Field as={"div"} className={"flex items-center space-x-4"}>
@@ -64,7 +76,7 @@ const App: React.FC = () => {
                     </Label>
                 </Field>
             </div>
-            <div className="flex space-x-16">
+            <div className="flex flex-col md:flex-row space-x-16 rounded bg-gray-50 p-4">
                 <div className={"min-w-56"}>
                     <ul className="space-y-4">
                         {ShadeGenerator(shades, hue, saturation, endSaturation).map(
@@ -256,6 +268,9 @@ const App: React.FC = () => {
                     </div>
                 </div>
             </div>
+            <div className={"mt-4"}>
+                <PalettesComponent colors={palletsList}/>
+            </div>
             <div className="mt-8">
         <pre className="bg-gray-200 rounded p-4">
           <span className="text-gray-500 select-none">{`module.exports = {
@@ -280,7 +295,23 @@ const App: React.FC = () => {
                     />
                 )
             )}
-            {`        }`}
+            {`        },
+        `}
+
+            {palletsList.map((palette) =>
+            <>
+                '{palette.name}':{`{
+`}
+                {Object.keys(palette.colors).map((key, index) =>
+                    <>{`          '${key}': '${palette.colors[Number(key)]}'${
+                        index < 10 ? "," : ""
+                    }
+`}</>
+                )}
+                {`        },
+        `}
+            </>
+            )}
             <span className="text-gray-500 select-none">{`
       },
     },
