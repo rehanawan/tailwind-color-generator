@@ -51,7 +51,7 @@ const App: React.FC = () => {
 
     return (
         <div className="max-w-7xl mx-auto p-4 w-full text-gray-900 antialiased">
-            <div className={"pb-8"}>
+            <a href={"/"} className={"pb-8"}>
                 <h1 className="text-4xl flex items-center justify-center font-bold text-center">
                     <div className={"flex h-7"}><svg id="logo-38" width="100%" height="100%" viewBox="0 0 78 32" fill="none"
                                xmlns="http://www.w3.org/2000/svg"> <path d="M55.5 0H77.5L58.5 32H36.5L55.5 0Z"
@@ -63,7 +63,7 @@ const App: React.FC = () => {
                     Shades Generator
                 </h1>
                 <h2 className={"text-md text-center"}>Powered by Tailwind and React</h2>
-            </div>
+            </a>
             <div className={"flex flex-col gap-2 justify-center w-full items-center my-2"}>
                 <ColorPicker onGenerate={(e)=>{
                     if (e) {
