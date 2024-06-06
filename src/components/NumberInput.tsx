@@ -19,7 +19,8 @@ const NumberInput: React.FC<INumberInputProps> = ({
     const value = Number.parseInt(event.target.value);
     if (value < max && value >= min) {
       setValue(value);
-    }
+    }else if (value>max) setValue(max);
+    else setValue(min);
   };
   return (
     <div>
