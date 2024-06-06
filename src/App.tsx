@@ -123,14 +123,14 @@ const App: React.FC = () => {
                 <div className="flex-1 space-y-4 flex flex-col justify-between mt-8">
                     <div className="space-y-10">
                         <div className={""}>
-                            <table className={"border-collapse w-full invisible md:visible"}>
+                            <table className={"border-collapse w-full"}>
                                 <tbody>
                                 <tr>
                                     {
                                         hueItems.map((item) => (
                                             <td
                                                 key={item}
-                                                className={"relative"}
+                                                className={`relative ${item%2 ? 'hidden md:block' : ''}`}
                                             >
                                                 <div
                                                     className={`${item == hue ? 'inline' : 'hidden'} absolute text-center -top-8 -left-4`}
@@ -157,7 +157,7 @@ const App: React.FC = () => {
                                         hueItems.map((item) => (
                                             <td
                                                 key={item}
-                                                className={'h-8'}
+                                                className={`h-8 ${item%2 ? 'hidden md:block' : ''}`}
                                                 style={{backgroundColor: `hsl(${item}, 100%, 50%)`, height: "22px"}}
                                                 onClick={() => setHue(item)}
                                                 title={`Hue: ${item}`}
