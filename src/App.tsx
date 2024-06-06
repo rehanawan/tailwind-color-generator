@@ -102,7 +102,7 @@ const App: React.FC = () => {
                     </Label>
                 </Field>
             </div>
-            <div className="flex flex-col md:flex-row space-x-16 rounded bg-gray-50 p-4">
+            <div className="flex flex-col md:flex-row md:space-x-16 rounded bg-gray-50 p-4">
                 <div className={"min-w-56"}>
                     <ul className="space-y-4">
                         {ShadeGenerator(shades, hue, saturation, endSaturation).map(
@@ -122,8 +122,8 @@ const App: React.FC = () => {
                 </div>
                 <div className="flex-1 space-y-4 flex flex-col justify-between mt-8">
                     <div className="space-y-10">
-                        <div className="">
-                            <table className={"border-collapse w-full"}>
+                        <div className={""}>
+                            <table className={"border-collapse w-full invisible md:visible"}>
                                 <tbody>
                                 <tr>
                                     {
