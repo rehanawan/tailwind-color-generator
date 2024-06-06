@@ -148,7 +148,7 @@ const ColorPicker:React.FC<{onGenerate:(e:Palette | undefined)=>void}> = ({ onGe
                 }`}
                 onClick={() => generate(newColorInHex)}
             >
-                Generate
+                Add
             </button>
         </div>
     );

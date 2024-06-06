@@ -24,7 +24,7 @@ const PalettesComponent: React.FC<{colors:Palette[]}> = ({colors}) => {
             <ul className="mt-4">
                 {
                     colors.map((color) =>
-                <li>
+                <li key={color.colors[500]}>
                     <div className="capitalize text-xs lg:h-24 mb-8 flex flex-col lg:flex-row">
                         <div
                             className="max-w-64 w-full lg:text-right pr-4 h-24 flex items-center lg:justify-end font-medium uppercase text-gray-900 hover:text-black">

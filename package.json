@@ -16,7 +16,8 @@
     "color-convert": "^2.0.1",
     "color-namer": "^1.4.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.23.1"
   },
   "devDependencies": {
     "@types/color-convert": "^2.0.3",
