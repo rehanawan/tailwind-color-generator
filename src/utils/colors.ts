@@ -11,6 +11,7 @@ export type Palette = {
 const CMY_HUES = [180, 300, 60];
 const RGB_HUES = [360, 240, 120, 0];
 
+
 export function getTextColor(color: string): "#FFF" | "#333" {
   const rgbColor = convert.hex.rgb(color);
 
@@ -63,12 +64,10 @@ export function isValidHexColorCode(str: string) {
 
 export function getColorName(color: string): string {
   const { name } = colorNamer(`#${color}`.replace("##", "#")).ntc[0];
-  const sanitizedName = name
-    .replace(/['/]/gi, "")
-    .replace(/\s+/g, "-")
-    .toLowerCase();
-
-  return sanitizedName;
+  return name
+      .replace(/['/]/gi, "")
+      .replace(/\s+/g, "-")
+      .toLowerCase();
 }
 
 export function sixDigitsColorHex (hexColor: string) {
