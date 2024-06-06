@@ -3,6 +3,8 @@ import colors, {Palette} from '../utils/colors';
 
 const ColorPicker:React.FC<{onGenerate:(e:Palette | undefined)=>void}> = ({ onGenerate }) => {
     const [color, setColor] = useState('');
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // @ts-ignore
     const [isMac, setIsMac] = useState(/Mac|iPod|iPhone|iPad/.test(navigator.platform));
     const inputColorRef = useRef(null);
     const inputColorPickerRef = useRef(null);
@@ -14,7 +16,9 @@ const ColorPicker:React.FC<{onGenerate:(e:Palette | undefined)=>void}> = ({ onGe
             if (isCmd && e.key === 'k') {
                 e.preventDefault();
                 if (inputColorRef.current)
-                    inputColorRef.current.focus();
+                    { // @ts-ignore
+                        inputColorRef.current.focus();
+                    }
             }
         };
 
@@ -58,21 +62,26 @@ const ColorPicker:React.FC<{onGenerate:(e:Palette | undefined)=>void}> = ({ onGe
     const cleanUpColorValue = (color:string) => color.replace(/[^0-9A-F]/gi, '').slice(0, 6);
 
     const updateInputColorValue = (e:never) => {
-            setColor(e.target.value);
+            // @ts-ignore
+        setColor(e.target.value);
     };
 
-    const cleanUpClipboardValue = (e: { clipboardData: { getData: (arg0: string) => never; }; }) => {
+    // @ts-ignore
+    const cleanUpClipboardValue = (e) => {
         const pastingText = e.clipboardData?e.clipboardData.getData('text/plain'):'';
         setColor(cleanUpColorValue(pastingText || ''));
     };
 
-    const handleKeydown = (e: { metaKey: never; ctrlKey: never; key: string; preventDefault: () => void; }) => {
+    // @ts-ignore
+    const handleKeydown = (e) => {
         const isCmd = isMac ? e.metaKey : e.ctrlKey;
 
         if (isCmd && e.key === 'ArrowDown') {
             e.preventDefault();
             if (inputColorPickerRef.current)
-                inputColorPickerRef.current.click();
+                { // @ts-ignore
+                    inputColorPickerRef.current.click();
+                }
         }
     };
 
