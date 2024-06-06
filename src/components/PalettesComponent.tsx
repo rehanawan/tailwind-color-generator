@@ -5,6 +5,9 @@ const PalettesComponent: React.FC<{colors:Palette[]}> = ({colors}) => {
     if (!colors || colors.length === 0) {
         return null;
     }
+    const allColors :Palette[] = [];
+    colors.forEach((color) => allColors.push(color));
+    // console.log(allColors.reverse());
     return (
         <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
             <div className="sticky top-20 bg-white z-10 py-1 hidden lg:flex">
@@ -23,7 +26,7 @@ const PalettesComponent: React.FC<{colors:Palette[]}> = ({colors}) => {
             </div>
             <ul className="mt-4">
                 {
-                    colors.map((color) =>
+                    allColors.reverse().map((color) =>
                 <li key={color.colors[500]}>
                     <div className="capitalize text-xs lg:h-24 mb-8 flex flex-col lg:flex-row">
                         <div
